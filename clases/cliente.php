@@ -4,8 +4,8 @@
 
     Class Cliente extends Persona {
 
-        public function __construct($nombre, $apellido, $dni, $edad, $email, $telefono){
-            parent::__construct($nombre, $apellido, $dni, $edad, $email, $telefono);    
+        public function __construct($nombre, $apellido, $dni, $telefono){
+            parent::__construct($nombre, $apellido, $dni, $telefono);    
         }
 
         public function mostrarDatos(){

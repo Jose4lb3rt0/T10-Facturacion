@@ -6,11 +6,11 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" rel="stylesheet">
     
 </head>
-<div class="w-full p-4 bg-blue-300 shadow-md">
+<div class="w-full p-4 bg-blue-500 shadow-md">
     <a href="index.php">
         <i class="fa-duotone fa-solid fa-money-bill 
-                  text-green-600 text-xl hover:text-green-800 hover:transition-all duration-300"></i>
+                  text-green-400 text-xl hover:text-green-800 hover:transition-all duration-300"></i>
         <span class="text-xl font-semibold text-white
-                     text-xl hover:text-gray-400 hover:transition-all duration-300">Facturación</span>
+                     text-xl hover:text-gray-800 hover:transition-all duration-300">Facturación</span>
     </a>
 </div>
