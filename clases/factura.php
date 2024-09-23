@@ -11,14 +11,25 @@
             $this->cliente = $cliente;
         }
 
-        public function agregarProducto(Producto $producto){
-            $this->productos[] = $producto;
+        public function agregarProducto(Producto $producto, $cantidad){
+            $this->productos[] = [
+                'producto' => $producto,
+                'cantidad' => $cantidad
+            ];
         }
 
-        public function calcularTotal(){
+        public function getCliente() {
+            return $this->cliente;
+        }
+    
+        public function getProductos() {
+            return $this->productos;
+        }
+
+        public function calcularTotal() {
             $total = 0;
-            foreach($this->productos as $producto){
-                $total += $producto->getPrecio();
+            foreach ($this->productos as $item) {
+                $total += $item['producto']->getPrecio() * $item['cantidad'];
             }
             return $total;
         }

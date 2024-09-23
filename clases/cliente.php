@@ -8,8 +8,8 @@
             parent::__construct($nombre, $apellido, $dni, $telefono);    
         }
 
-        public function mostrarDatos(){
-            echo "Cliente: {$this->nombre} {$this->apellido} <br>";
+        public function mostrarDatos() {
+            return "Cliente: {$this->getNombre()} {$this->getApellido()} {$this->getDni()} {$this->getTelefono()}<br>";
         }
 
     }
