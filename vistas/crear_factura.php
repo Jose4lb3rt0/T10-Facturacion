@@ -88,7 +88,7 @@ if (isset($_POST['eliminar'])){
                                 <td class="py-2 px-4"><?php echo $producto->getNombre(); ?></td>
                                 <td class="py-2 px-4 text-center"><?php echo 'S/ ' . number_format($producto->getPrecio(), 2); ?></td>
                                 <td class="py-2 px-4 text-center">
-                                    <input type="number" class="border rounded-lg p-2 text-center w-20" id="cantidadInput" name="items[<?= $index ?>][cantidad]" min="1" value="1">
+                                    <input type="number" class="border rounded-lg p-2 text-center w-20" id="cantidadInput" name="items[<?= $index ?>][cantidad]" min="1" value="1" onchange="calcularTotal()">
                                 </td>
                                 <td class="py-2 px-4 flex justify-center">
                                     <input type="checkbox" name="items[<?= $index ?>][producto]" value="<?= $index ?>" data-precio="<?php echo $producto->getPrecio(); ?>" onchange="calcularTotal()">
