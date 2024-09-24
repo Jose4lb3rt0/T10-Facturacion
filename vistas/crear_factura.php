@@ -44,7 +44,7 @@ if (isset($_POST['eliminar'])){
 
 <body>
     <div class="flex p-4 justify-center gap-5">
-        <div class="bg-white p-8 rounded-lg shadow-lg max-w-xl">
+        <div class="bg-white p-8 rounded-lg shadow-lg max-w-2xl">
 
             <div class="flex items-center gap-1 text-2xl font-bold text-gray-700 mb-5 justify-center">
                 <i class="fa-solid fa-receipt"></i>
@@ -73,7 +73,7 @@ if (isset($_POST['eliminar'])){
                     </tbody>
                 </table>
 
-                <table class="bg-white shadow-md rounded-lg max-w-xl w-full mb-4">
+                <table class="bg-white shadow-md rounded-lg max-w-2xl w-full mb-4">
                     <thead>
                         <tr class="bg-blue-500 text-white text-left">
                             <th class="rounded-tl-lg py-2 px-4">Producto</th>
@@ -88,7 +88,7 @@ if (isset($_POST['eliminar'])){
                                 <td class="py-2 px-4"><?php echo $producto->getNombre(); ?></td>
                                 <td class="py-2 px-4 text-center"><?php echo 'S/ ' . number_format($producto->getPrecio(), 2); ?></td>
                                 <td class="py-2 px-4 text-center">
-                                    <input type="number" name="items[<?= $index ?>][cantidad]" min="1" value="1">
+                                    <input type="number" class="border rounded-lg p-2 text-center w-20" id="cantidadInput" name="items[<?= $index ?>][cantidad]" min="1" value="1">
                                 </td>
                                 <td class="py-2 px-4 flex justify-center">
                                     <input type="checkbox" name="items[<?= $index ?>][producto]" value="<?= $index ?>" data-precio="<?php echo $producto->getPrecio(); ?>" onchange="calcularTotal()">
@@ -107,30 +107,37 @@ if (isset($_POST['eliminar'])){
                 </div>
             </form>
 
-            <table class="bg-white shadow-md rounded-lg max-w-xl w-full mt-4">
+            <table class="bg-white shadow-md rounded-lg max-w-2xl mt-4">
                 <thead>
-                    <tr class="bg-blue-500 text-white text-left">
+                    <tr class="bg-gray-400 text-gray-800 text-left">
                         <th class="rounded-tl-lg py-2 px-4">Cliente</th>
                         <th class="py-2 px-4 text-center">Productos</th>
                         <th class="py-2 px-4 text-center">Total</th>
-                        <th class="py-2 px-4 text-center">Acciones</th>
+                        <th class="rounded-tr-lg py-2 px-4 text-center">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php if (!empty($facturas)): ?>
                         <?php foreach ($facturas as $factura): ?>
-                            <tr class="border-b">
-                                <td class="py-2 px-4"><?php echo $factura->getCliente()->getNombre() . ' ' . $factura->getCliente()->getApellido(); ?></td>
-                                <td class="py-2 px-4 text-center">
+                            <tr class="border-b bg-gray-300 text-gray-600 font-bold h-32">
+                                <td class="py-2 px-4">
+                                    <?php echo 
+                                        $factura->getCliente()->getNombre() . ' ' . 
+                                        $factura->getCliente()->getApellido() . ' ' .  
+                                        $factura->getCliente()->getDNI() . ' ' .  
+                                        $factura->getCliente()->getTelefono(); 
+                                    ?>
+                                </td>
+                                <td class="py-2 px-4">
                                     <?php foreach ($factura->getProductos() as $item): ?>
-                                        <?php echo $item['producto']->getNombre(); ?> (Cantidad: <?php echo $item['cantidad']; ?>)<br>
+                                        <?php echo '- ' . $item['producto']->getNombre(); ?> (x <?php echo $item['cantidad']; ?>)<br>
                                     <?php endforeach; ?>
                                 </td>
-                                <td class="py-2 px-4 text-center">S/ <?= number_format($factura->calcularTotal(), 2); ?></td>
+                                <td class="py-2 px-4">S/ <?= number_format($factura->calcularTotal(), 2); ?></td>
                                 <td class="py-2 px-4 text-center">
                                     <form action="" method="POST">
                                         <input type="hidden" name="index" value="<?= array_search($factura, $facturas); ?>">
-                                        <button type="submit" name="eliminar" class="bg-red-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-red-600 focus:ring-2 focus:ring-red-500 focus:outline-none transition-all duration-300">
+                                        <button type="submit" name="eliminar" class="bg-gray-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-red-600 focus:ring-2 focus:ring-red-500 focus:outline-none transition-all duration-300">
                                             <i class="fa-solid fa-trash"></i>
                                         </button>
                                     </form>
@@ -139,7 +146,7 @@ if (isset($_POST['eliminar'])){
                         <?php endforeach; ?>
                     <?php else: ?>
                         <tr>
-                            <td colspan="3" class="py-2 px-4 text-center">No hay facturas registradas.</td>
+                            <td colspan="4" class="py-2 px-4 text-center">No hay facturas registradas.</td>
                         </tr>
                     <?php endif; ?>
                 </tbody>
@@ -152,6 +159,7 @@ if (isset($_POST['eliminar'])){
         function calcularTotal() {
             let total = 0;
             const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+
             checkboxes.forEach(checkbox => {
                 if (checkbox.checked) {
                     const cantidadInput = checkbox.closest('tr').querySelector('input[type="number"]');
